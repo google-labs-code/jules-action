@@ -61,9 +61,12 @@ runs:
         echo '```'         >> prompt.txt
 
     - name: Assemble Jules payload
+      env:
+        STARTING_BRANCH: ${{ inputs.starting_branch }}
+        REPO_FULL_NAME: ${{ github.repository }}
       shell: bash
       run: |
-        jq -n --arg jules_prompt "$(cat prompt.txt)" --arg starting_branch "${{ inputs.starting_branch }}" --arg repo_full_name "${{ github.repository }}" '{
+        jq -n --arg jules_prompt "$(cat prompt.txt)" --arg starting_branch "$STARTING_BRANCH" --arg repo_full_name "$REPO_FULL_NAME" '{
             "prompt": $jules_prompt,
             "sourceContext": {
               "source": "sources/github/\($repo_full_name)",
@@ -76,10 +79,12 @@ runs:
           }' > jules_payload.json
 
     - name: Invoke Jules
+      env:
+        JULES_API_KEY: ${{ inputs.jules_api_key }}
       shell: bash
       run: |
         curl 'https://jules.googleapis.com/v1alpha/sessions' \
           -X POST \
           -H "Content-Type: application/json" \
-          -H "X-Goog-Api-Key: ${{ inputs.jules_api_key }}" \
+          -H "X-Goog-Api-Key: $JULES_API_KEY" \
           -d @jules_payload.json
