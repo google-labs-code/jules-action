@@ -83,8 +83,17 @@ runs:
         JULES_API_KEY: ${{ inputs.jules_api_key }}
       shell: bash
       run: |
-        curl 'https://jules.googleapis.com/v1alpha/sessions' \
+        HTTP_CODE=$(curl -s -o response.json -w '%{http_code}' \
+          'https://jules.googleapis.com/v1alpha/sessions' \
           -X POST \
           -H "Content-Type: application/json" \
           -H "X-Goog-Api-Key: $JULES_API_KEY" \
-          -d @jules_payload.json
+          -d @jules_payload.json)
+
+        if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+          echo "::error::Jules API returned HTTP $HTTP_CODE"
+          cat response.json >&2
+          exit 1
+        fi
+
+        cat response.json
