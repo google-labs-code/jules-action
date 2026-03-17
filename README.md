@@ -53,7 +53,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: google-labs-code/jules-invoke@v1
+      - uses: google-labs-code/jules-action@v1.0.0
         with:
           prompt: |
             You are a security agent. Scan for vulnerabilities and fix them:
@@ -123,7 +123,7 @@ jobs:
   optimize:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-labs-code/jules-invoke@v1
+      - uses: google-labs-code/jules-action@v1.0.0
         with:
           prompt: |
             You are a performance improvement agent. Run our benchmark suite
@@ -165,7 +165,7 @@ Jules triggering.
 - name: Invoke Jules
   # Only runs if user is in the allowlist
   if: ${{ contains(fromJSON('["trusted-user", "another-user"]'), github.event.issue.user.login) }}
-  uses: google-labs-code/jules-invoke@v1
+  uses: google-labs-code/jules-action@v1.0.0
   with:
     prompt: ...
 ```
@@ -199,6 +199,6 @@ If you find this useful, add the badge to your README:
 
 **Built with ❤️ by Google**
 
-[Jules](https://jules.google) • [API Docs](https://jules.google/docs/api/reference/) • [Report Issues](https://github.com/google-labs-code/jules-invoke/issues)
+[Jules](https://jules.google) • [API Docs](https://jules.google/docs/api/reference/) • [Report Issues](https://github.com/google-labs-code/jules-action/issues)
 
 </div>

@@ -14,7 +14,7 @@ jobs:
     
     steps:
       - name: Invoke Jules for Cleanup
-        uses: google-labs-code/jules-invoke@v1
+        uses: google-labs-code/jules-action@v1.0.0
         with:
           prompt: |
             Please analyze the codebase and perform maintenance tasks:

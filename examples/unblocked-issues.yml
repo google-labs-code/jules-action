@@ -44,7 +44,7 @@ jobs:
       - name: Invoke Jules on Unblocked Issue
         # SECURITY: Only allow trusted users' issues
         if: ${{ contains(fromJSON('["your-username", "trusted-collaborator"]'), fromJson(steps.get_issue.outputs.result).user.login) }}
-        uses: google-labs-code/jules-invoke@v1
+        uses: google-labs-code/jules-action@v1.0.0
         with:
           prompt: |
             An issue has been unblocked and is ready for implementation:

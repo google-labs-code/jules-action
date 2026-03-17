@@ -29,7 +29,7 @@ jobs:
             return logs.url;
       
       - name: Invoke Jules to fix failure
-        uses: google-labs-code/jules-invoke@v1
+        uses: google-labs-code/jules-action@v1.0.0
         with:
           prompt: |
             The CI workflow "${{ github.event.workflow_run.name }}" has failed.
