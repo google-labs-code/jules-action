@@ -15,7 +15,7 @@ Invoke a powerful remote coding agent using GitHub Actions
 
 ## What is Jules?
 
-**[Jules](https://jules.google)** is a remote AI coding agent from [Google Labs](https://labs.google) powered by Gemini 3 Pro. It works autonomously in a cloud VM—analyzing your codebase, implementing features, fixing bugs, and creating pull requests while you focus on what matters.
+**[Jules](https://jules.google)** is a remote AI coding agent from [Google Labs](https://labs.google) powered by Gemini 3.1 Pro. It works autonomously in a cloud VM—analyzing your codebase, implementing features, fixing bugs, and creating pull requests while you focus on what matters.
 
 **This action** lets you trigger Jules from any GitHub event: issues, pull requests, schedules, or workflow dispatches.
 
