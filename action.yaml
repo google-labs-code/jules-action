@@ -31,7 +31,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
       with:
         fetch-depth: 30
 
@@ -62,8 +62,11 @@ runs:
 
     - name: Assemble Jules payload
       shell: bash
+      env:
+        STARTING_BRANCH: ${{ inputs.starting_branch }}
+        REPO_FULL_NAME: ${{ github.repository }}
       run: |
-        jq -n --arg jules_prompt "$(cat prompt.txt)" --arg starting_branch "${{ inputs.starting_branch }}" --arg repo_full_name "${{ github.repository }}" '{
+        jq -n --rawfile jules_prompt prompt.txt --arg starting_branch "$STARTING_BRANCH" --arg repo_full_name "$REPO_FULL_NAME" '{
             "prompt": $jules_prompt,
             "sourceContext": {
               "source": "sources/github/\($repo_full_name)",
@@ -77,9 +80,11 @@ runs:
 
     - name: Invoke Jules
       shell: bash
+      env:
+        JULES_API_KEY: ${{ inputs.jules_api_key }}
       run: |
-        curl 'https://jules.googleapis.com/v1alpha/sessions' \
+        curl --fail-with-body --silent --show-error 'https://jules.googleapis.com/v1alpha/sessions' \
           -X POST \
           -H "Content-Type: application/json" \
-          -H "X-Goog-Api-Key: ${{ inputs.jules_api_key }}" \
+          -H "X-Goog-Api-Key: $JULES_API_KEY" \
           -d @jules_payload.json
